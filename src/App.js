@@ -12,17 +12,7 @@ import Docs from "./views/Docs";
 import Timers from "./views/Timers";
 
 function App() {
-  let [queue, setQueue] = useState([
-    {
-      timerName: "stopwatch",
-      time: 0,
-      status: "notRunning",
-      limit: "2",
-      rounds: 0,
-      work: 0,
-      rest: 0,
-    },
-  ]);
+  let [queue, setQueue] = useState([]);
 
   const addToQueue = (newTimer) => {
     console.log("new timer from queue: " + newTimer);
