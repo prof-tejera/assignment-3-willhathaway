@@ -3,50 +3,49 @@ import Timer from "../generic/Timer";
 import Button from "../generic/Button";
 import Input from "../generic/Input";
 
-const TabataSettings = ({  onChangeSettings }) => {
+const Tabata = () => {
   const [workTime, setWorkTime] = useState("00");
   const [restTime, setRestTime] = useState("00");
-  const [rounds, setRounds] = useState("00");
+  const [rounds, setRounds] = useState("0");
   const [currentRound, setCurrentRound] = useState(1);
   const [isActive, setIsActive] = useState(false);
   const [timeLeft, setTimeLeft] = useState(workTime * 1000);
   const [isWorkPeriod, setIsWorkPeriod] = useState(true);
 
-  useEffect(
-    (settings) => {
-      let interval;
+  useEffect(() => {
+    let interval;
 
-      if (isActive && currentRound <= rounds) {
-        interval = setInterval(() => {
-          setTimeLeft((prevTime) => {
-            if (prevTime > 0) {
-              return prevTime - 1000;
+    if (isActive && currentRound <= rounds) {
+      interval = setInterval(() => {
+        setTimeLeft((prevTime) => {
+          if (prevTime > 0) {
+            return prevTime - 1000;
+          } else {
+            if (isWorkPeriod) {
+              setIsWorkPeriod(false);
+              return restTime * 1000;
             } else {
-              if (isWorkPeriod) {
-                setIsWorkPeriod(false);
-                return restTime * 1000;
-              } else {
-                setIsWorkPeriod(true);
-                if (currentRound < rounds) {
-                  setCurrentRound((round) => round + 1);
-                }
-                return workTime * 1000;
+              setIsWorkPeriod(true);
+              if (currentRound < rounds) {
+                setCurrentRound((round) => round + 1);
               }
+              return workTime * 1000;
             }
-          });
-        }, 1000);
-      } else if (currentRound > rounds && isActive) {
-        setIsActive(false);
-      }
+          }
+        });
+      }, 1000);
+    } else if (currentRound > rounds && isActive) {
+      setIsActive(false);
+    }
 
-      return () => clearInterval(interval);
-    },
-    [isActive, currentRound, isWorkPeriod, workTime, restTime, rounds]
-  );
+    return () => clearInterval(interval);
+  }, [isActive, currentRound, isWorkPeriod, workTime, restTime, rounds]);
+
 
   const toggleStartStop = () => {
     if (!isActive) {
       setIsActive(true);
+      // Set the conditions only when starting the timer
       if (currentRound === 1 && timeLeft === workTime * 1000) {
         setIsWorkPeriod(true);
       }
@@ -54,16 +53,7 @@ const TabataSettings = ({  onChangeSettings }) => {
       setIsActive(false);
     }
   };
-
-
-  useEffect(() => {
-    onChangeSettings({
-      timerName: "tabata",
-      work: workTime,
-      rest: restTime,
-      rounds: rounds,
-    });
-  }, [workTime, restTime, rounds]);
+  
 
   const handleReset = () => {
     setIsActive(false);
@@ -72,10 +62,10 @@ const TabataSettings = ({  onChangeSettings }) => {
     setIsWorkPeriod(true);
   };
 
+
+
   return (
     <div>
-      <Timer time={timeLeft} />
-
       <label>
         <Input
           name="Work Time (s):"
@@ -104,18 +94,16 @@ const TabataSettings = ({  onChangeSettings }) => {
       </label>
       <div />
 
+      <Timer time={timeLeft} />
       <div>
-          <div>
-            <div>
-              Round: {currentRound} / {rounds}
-            </div>
-            <div>{isWorkPeriod ? "Work" : "Rest"} Period</div>
-          </div>
-        
-        <Button name="Reset" method={handleReset} />
+        Round: {currentRound} / {rounds}
       </div>
+      <div>{isWorkPeriod ? "Work" : "Rest"} Period</div>
+      {!isActive && <Button name="Start" method={toggleStartStop} />}
+      {isActive && <Button name="Stop" method={toggleStartStop} />}
+      <Button name="Reset" method={handleReset} />
     </div>
   );
 };
 
-export default TabataSettings;
+export default Tabata;

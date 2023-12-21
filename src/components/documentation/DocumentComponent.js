@@ -4,6 +4,8 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   border: 1px solid #121212;
   margin: 20px 0px;
+  background-color: whitesmoke;
+
 `;
 
 const Container = styled.div`

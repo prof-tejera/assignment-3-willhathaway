@@ -11,6 +11,8 @@ const Timer = ({ time }) => {
     textAlign: "center",
     border: "1px solid white",
     borderRadius: "4px",
+
+
   };
 
 

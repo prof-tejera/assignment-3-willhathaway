@@ -2,6 +2,8 @@
   text-align: center;
 }
 
+
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -14,14 +16,12 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  height: 60px;
+  width: 100%;
+  background-color: #1a1a1a; 
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center; 
+  justify-content: center; 
 }
 
 .App-link {
@@ -35,4 +35,65 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.timer-card {
+  margin: 20px auto;
+  padding: 10px;
+  display: inline-block;
+}
+
+.timer-controls {
+  background-color: black;
+  text-align: center;
+  border: 1px solid white;
+  border-radius: 4px;
+  margin: auto; 
+  width: 50%;
+}
+
+.body-text {
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  width: 100%;
+}
+
+.queue-container {
+  margin-left: 25vw;
+  margin-right: 25vw;
+  text-align: center; 
+  background-color: black;
+  padding: 20px;
+  padding-bottom: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border:1px solid white; 
+  border-radius: 4px;
+
+}
+
+.Container {
+  margin: 10px auto;
+  text-align: center;
+}
+
+
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center; 
+}
+
+nav li {
+  margin: 0 10px; 
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
 }

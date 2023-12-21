@@ -26,7 +26,7 @@ const TimerCard = ({ timerSettings, onUpdate, onDelete , onMoveUp, onMoveDown}) 
   };
 
   return (
-    <div>
+    <div className="timer-card">
       <div>{timerSettings.timerName}</div>
       {timerSettings.timerName === "stopwatch" && (
         <div>

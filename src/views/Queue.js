@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import "../App.css";
+
 import Timer from "../components/generic/Timer";
 import Button from "../components/generic/Button";
 import Container from "../components/generic/Container";
@@ -11,7 +13,13 @@ import runTabataTimer from "../functions/tabata";
 import runXYTimer from "../functions/xy";
 import calculateTotalTime from "../functions/calculateTotalTime";
 
-export const Queue = ({ queue, updateQueue, deleteFromQueue, moveTimerUp, moveTimerDown }) => {
+export const Queue = ({
+  queue,
+  updateQueue,
+  deleteFromQueue,
+  moveTimerUp,
+  moveTimerDown,
+}) => {
   console.log("QUEUE: " + JSON.stringify(queue));
   const [currentTimerIndex, setCurrentTimerIndex] = useState(0);
   const currentTimer = queue[currentTimerIndex];
@@ -44,7 +52,6 @@ export const Queue = ({ queue, updateQueue, deleteFromQueue, moveTimerUp, moveTi
     }
   }, [isRunning, currentTimerIndex, currentRound, isWorkPeriod]);
 
-
   let updateTimer = () => {
     console.log("isRunning: " + isRunning);
 
@@ -70,7 +77,6 @@ export const Queue = ({ queue, updateQueue, deleteFromQueue, moveTimerUp, moveTi
         }
         break;
       case "tabata":
-
         let result = runTabataTimer(currentTimer, timeRef.current);
         setDisplayTime(result.newTime);
         timeRef.current = result.newTime;
@@ -95,24 +101,24 @@ export const Queue = ({ queue, updateQueue, deleteFromQueue, moveTimerUp, moveTi
         }
         break;
 
-        case "xy":
-          const xyResult = runXYTimer(
-            currentTimer,
-            timeRef.current,
-            currentRound
-          );
-          setDisplayTime(xyResult.newTime);
-          timeRef.current = xyResult.newTime;
-        
-          if (xyResult.incrementRound) {
-            setCurrentRound(currentRound + 1);
-          }
-        
-          if (xyResult.newTime === -1) {
-            handleTimerCompletion();
-          }
-          break;
-        
+      case "xy":
+        const xyResult = runXYTimer(
+          currentTimer,
+          timeRef.current,
+          currentRound
+        );
+        setDisplayTime(xyResult.newTime);
+        timeRef.current = xyResult.newTime;
+
+        if (xyResult.incrementRound) {
+          setCurrentRound(currentRound + 1);
+        }
+
+        if (xyResult.newTime === -1) {
+          handleTimerCompletion();
+        }
+        break;
+
       default:
         setDisplayTime(0);
         break;
@@ -176,43 +182,48 @@ export const Queue = ({ queue, updateQueue, deleteFromQueue, moveTimerUp, moveTi
 
   const reset = () => {
     setCurrentTimerIndex(0);
-    initializeTimer(0);  };
+    initializeTimer(0);
+  };
   const skip = () => {
-    const nextIndex = currentTimerIndex < queue.length - 1 ? currentTimerIndex + 1 : 0;
+    const nextIndex =
+      currentTimerIndex < queue.length - 1 ? currentTimerIndex + 1 : 0;
     setCurrentTimerIndex(nextIndex);
-    initializeTimer(nextIndex); 
+    initializeTimer(nextIndex);
   };
   return (
     <div>
-      <p>TOTAL TIME</p>
+      <p className="body-text">TOTAL TIME</p>
       <Timer time={calculateTotalTime(queue)} />
-      <p>CURRENT TIMER</p>
+      <p className="body-text">CURRENT TIMER</p>
 
       <Timer time={displayTime} />
 
-
-      <Button name={isRunning ? "Stop" : "Start"} method={toggleStartStop} />
-      <Button name="Skip" method={skip} />
-      <Button name="Reset" method={reset} />
-      {queue.map((timerSettings, index) => (
-        <Container
-          key={index}
-          style={index === currentTimerIndex ? highlightedTimerStyle : {}}
-        >
-          <TimerCard
-            timerSettings={timerSettings}
-            currentRound={currentRound}
-            isWorkPeriod={isWorkPeriod}
-            onUpdate={(newSettings) => updateQueue(index, newSettings)}
-            onDelete={() => deleteFromQueue(index)}
-            onMoveUp={() => moveTimerUp(index)}
-            onMoveDown={() => moveTimerDown(index)}
-          />
-          {/* <Button name="Reset" method={handleReset} />
+      <div className="timer-controls">
+        <Button name={isRunning ? "Stop" : "Start"} method={toggleStartStop} />
+        <Button name="Skip" method={skip} />
+        <Button name="Reset" method={reset} />
+      </div>
+      <div className="queue-container">
+        {queue.map((timerSettings, index) => (
+          <Container
+            key={index}
+            style={index === currentTimerIndex ? highlightedTimerStyle : {}}
+          >
+            <TimerCard
+              timerSettings={timerSettings}
+              currentRound={currentRound}
+              isWorkPeriod={isWorkPeriod}
+              onUpdate={(newSettings) => updateQueue(index, newSettings)}
+              onDelete={() => deleteFromQueue(index)}
+              onMoveUp={() => moveTimerUp(index)}
+              onMoveDown={() => moveTimerDown(index)}
+            />
+            {/* <Button name="Reset" method={handleReset} />
           <Button name="Delete" method={handleDelete} />
           <Button name="Edit" method={handleEdit} /> */}
-        </Container>
-      ))}
+          </Container>
+        ))}
+      </div>
     </div>
   );
 };
