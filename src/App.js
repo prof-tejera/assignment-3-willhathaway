@@ -80,7 +80,7 @@ function App() {
 
         <Routes>
           <Route
-            path="/"
+            path=""
             element={
               <Queue
                 queue={queue}
