@@ -4,6 +4,7 @@ import Timer from "../generic/Timer";
 import Input from "../generic/Input";
 
 const XYSettings = ({  onChangeSettings }) => {
+  const [description, setDescription] = useState("");
   const [hours, setHours] = useState("00");
   const [minutes, setMinutes] = useState("00");
   const [seconds, setSeconds] = useState("00");
@@ -28,29 +29,10 @@ const XYSettings = ({  onChangeSettings }) => {
     );
   }, [hours, minutes, seconds]);
 
-  useEffect(() => {
-    let interval;
-    if (isRunning && time > 0) {
-      interval = setInterval(() => {
-        setTime((prevTime) => prevTime - 1000);
-      }, 1000);
-    } else if (time === 0) {
-      setIsRunning(false);
 
-      if (currentRound < rounds) {
-        setCurrentRound((prevRound) => prevRound + 1);
-        setTime(parseTimeToMilliseconds());
-        setIsRunning(true);
-      }
-    }
-    return () => clearInterval(interval);
-  }, [isRunning, time, currentRound, rounds]);
-
-  const toggleStartStop = () => {
-    setIsRunning(!isRunning);
-  };
 
   const handleReset = () => {
+    setDescription("");
     setHours("00");
     setMinutes("00");
     setSeconds("00");
@@ -62,6 +44,9 @@ const XYSettings = ({  onChangeSettings }) => {
 
   const handleChange = (increment, value) => {
     switch (increment) {
+      case "desc":
+        setDescription(value);
+        break;
       case "hour":
         setHours(value);
         break;
@@ -87,6 +72,12 @@ const XYSettings = ({  onChangeSettings }) => {
       <Timer time={time} />
 
       <div>
+      <Input
+          name="Description"
+          value={description}
+          onChange={(newValue) => handleChange("desc", newValue)}
+          inputLength={25}
+        />
         <Input
           name={"Hours"}
           value={hours}

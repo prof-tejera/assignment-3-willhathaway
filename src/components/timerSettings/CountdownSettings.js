@@ -11,18 +11,7 @@ const CountdownSettings = ({ onChangeSettings }) => {
   const [time, setTime] = useState("0");
   const [isRunning, setIsRunning] = useState(false);
 
-  useEffect(() => {
-    let interval;
-    if (isRunning && time > 0) {
-      interval = setInterval(
-        () => setTime((prevTime) => prevTime - 1000),
-        1000
-      );
-    } else if (time === 0) {
-      setIsRunning(false);
-    }
-    return () => clearInterval(interval);
-  }, [isRunning, time]);
+
 
   const handleReset = () => {
     setDescription("");
@@ -71,7 +60,7 @@ const CountdownSettings = ({ onChangeSettings }) => {
           name="Description"
           value={description}
           onChange={(newValue) => handleChange("desc", newValue)}
-          inputLength={10}
+          inputLength={25}
         />
         <Input
           name={"Hours"}

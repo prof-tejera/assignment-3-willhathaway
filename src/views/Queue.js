@@ -218,9 +218,7 @@ export const Queue = ({
               onMoveUp={() => moveTimerUp(index)}
               onMoveDown={() => moveTimerDown(index)}
             />
-            {/* <Button name="Reset" method={handleReset} />
-          <Button name="Delete" method={handleDelete} />
-          <Button name="Edit" method={handleEdit} /> */}
+  
           </Container>
         ))}
       </div>

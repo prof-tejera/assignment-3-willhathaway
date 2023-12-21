@@ -4,24 +4,17 @@ import Button from "../generic/Button";
 import Input from "../generic/Input";
 
 const StopwatchSettings = ({ onChangeSettings }) => {
+  const [description, setDescription] = useState("");
+
   const [time, setTime] = useState(0);
   const [limit, setLimit] = useState(0);
 
   const [isRunning, setIsRunning] = useState(false);
 
-  useEffect(() => {
-    let interval;
-    if (isRunning) {
-      interval = setInterval(
-        () => setTime((prevTime) => prevTime + 1000),
-        1000
-      );
-    }
-    return () => clearInterval(interval);
-  }, [isRunning]);
+
 
   const handleChange = (value) => {
-    onChangeSettings({timerName: "stopwatch", limit: value})
+    onChangeSettings({ timerName: "stopwatch", limit: value });
     setLimit(value);
   };
 
@@ -35,6 +28,12 @@ const StopwatchSettings = ({ onChangeSettings }) => {
 
   return (
     <div>
+      <Input
+        name="Description"
+        value={description}
+        onChange={(newValue) => handleChange("desc", newValue)}
+        inputLength={25}
+      />
       <Timer time={time} />
       <Input
         name={"Limit (seconds)"}

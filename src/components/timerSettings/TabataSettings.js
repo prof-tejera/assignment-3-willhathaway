@@ -4,6 +4,8 @@ import Button from "../generic/Button";
 import Input from "../generic/Input";
 
 const TabataSettings = ({  onChangeSettings }) => {
+  const [description, setDescription] = useState("");
+
   const [workTime, setWorkTime] = useState("00");
   const [restTime, setRestTime] = useState("00");
   const [rounds, setRounds] = useState("00");
@@ -12,48 +14,7 @@ const TabataSettings = ({  onChangeSettings }) => {
   const [timeLeft, setTimeLeft] = useState(workTime * 1000);
   const [isWorkPeriod, setIsWorkPeriod] = useState(true);
 
-  useEffect(
-    (settings) => {
-      let interval;
 
-      if (isActive && currentRound <= rounds) {
-        interval = setInterval(() => {
-          setTimeLeft((prevTime) => {
-            if (prevTime > 0) {
-              return prevTime - 1000;
-            } else {
-              if (isWorkPeriod) {
-                setIsWorkPeriod(false);
-                return restTime * 1000;
-              } else {
-                setIsWorkPeriod(true);
-                if (currentRound < rounds) {
-                  setCurrentRound((round) => round + 1);
-                }
-                return workTime * 1000;
-              }
-            }
-          });
-        }, 1000);
-      } else if (currentRound > rounds && isActive) {
-        setIsActive(false);
-      }
-
-      return () => clearInterval(interval);
-    },
-    [isActive, currentRound, isWorkPeriod, workTime, restTime, rounds]
-  );
-
-  const toggleStartStop = () => {
-    if (!isActive) {
-      setIsActive(true);
-      if (currentRound === 1 && timeLeft === workTime * 1000) {
-        setIsWorkPeriod(true);
-      }
-    } else {
-      setIsActive(false);
-    }
-  };
 
 
   useEffect(() => {
@@ -66,6 +27,8 @@ const TabataSettings = ({  onChangeSettings }) => {
   }, [workTime, restTime, rounds]);
 
   const handleReset = () => {
+    setDescription("");
+
     setIsActive(false);
     setCurrentRound(1);
     setTimeLeft(workTime * 1000);
@@ -75,7 +38,14 @@ const TabataSettings = ({  onChangeSettings }) => {
   return (
     <div>
       <Timer time={timeLeft} />
-
+      <label>
+      <Input
+          name="Description"
+          value={description}
+          onChange={(newValue) => setDescription(newValue)}
+          inputLength={25}
+        />
+      </label>
       <label>
         <Input
           name="Work Time (s):"

@@ -8,6 +8,8 @@ import { useState } from "react";
 
 const TimerCard = ({ timerSettings, onUpdate, onDelete , onMoveUp, onMoveDown}) => {
 
+  console.log("settings: " + JSON.stringify(timerSettings))
+
   const [isEditing, setIsEditing] = useState(false);
   const [editedSettings, setEditedSettings] = useState(timerSettings);
 
@@ -28,6 +30,8 @@ const TimerCard = ({ timerSettings, onUpdate, onDelete , onMoveUp, onMoveDown}) 
   return (
     <div className="timer-card">
       <div>{timerSettings.timerName}</div>
+      <div>{timerSettings.description}</div>
+
       {timerSettings.timerName === "stopwatch" && (
         <div>
           <p>Limit: {timerSettings.limit}</p>
