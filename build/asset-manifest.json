@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/prof-tejera/assignment-3-willhathaway/static/css/main.dcbb4808.css",
+    "main.js": "/prof-tejera/assignment-3-willhathaway/static/js/main.92418bc2.js",
+    "static/js/787.6a88308b.chunk.js": "/prof-tejera/assignment-3-willhathaway/static/js/787.6a88308b.chunk.js",
+    "index.html": "/prof-tejera/assignment-3-willhathaway/index.html",
+    "main.dcbb4808.css.map": "/prof-tejera/assignment-3-willhathaway/static/css/main.dcbb4808.css.map",
+    "main.92418bc2.js.map": "/prof-tejera/assignment-3-willhathaway/static/js/main.92418bc2.js.map",
+    "787.6a88308b.chunk.js.map": "/prof-tejera/assignment-3-willhathaway/static/js/787.6a88308b.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.dcbb4808.css",
+    "static/js/main.92418bc2.js"
+  ]
+}
